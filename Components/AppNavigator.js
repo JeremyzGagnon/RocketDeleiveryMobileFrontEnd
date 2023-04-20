@@ -19,8 +19,7 @@ const AppNavigator = () => {
       screenOptions={{
         headerShown: false,
       }}
-      // chchchchchch
-      initialRouteName="Restaurants"
+      initialRouteName="Authentification"
 
     >
       
@@ -45,10 +44,8 @@ const AppNavigator = () => {
   return (
     // Return the appropriate stack when loged in or not with the banner
     <NavigationContainer>
-      {/* {isAuthenticated ? <MainStack /> : <AuthStack />} */}
-
       {isAuthenticated && <Banner setIsAuthenticated={setIsAuthenticated} />}
-      <MainStack />
+      {isAuthenticated ? <MainStack /> : <AuthStack />}
     </NavigationContainer>
   );
 };

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TextInput, Image, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 
-const urlNgrok = "https://6767-2607-fea8-fec0-85a9-5019-83f4-35e6-706f.ngrok.io"
+const urlNgrok = "https://515d-2607-fea8-fec0-85a9-5019-83f4-35e6-706f.ngrok.io"
 
 const Auth = ({ setIsAuthenticated }) => {
   // Attributes
@@ -26,7 +26,6 @@ const Auth = ({ setIsAuthenticated }) => {
       .then((data) => {
         console.log(data);
         setIsAuthenticated(true);
-        window.alert("Success")
         navigation.navigate("Restaurants");
       })
       .catch((error) => {
