@@ -3,22 +3,22 @@ import { View, Text, Button } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
 
-const url = "https://ec46-2607-fea8-fec0-85a9-5019-83f4-35e6-706f.ngrok.io"
-
+const url = "https://515d-2607-fea8-fec0-85a9-5019-83f4-35e6-706f.ngrok.io"
+// Class
 const Restaurants = () => {
   
   // Attributes
-  const [rating, setRating] = useState("");
-  const [price, setPrice] = useState("");
-
+  const [rating, setRating] = useState(0);
+  const [price, setPrice] = useState(0);
+// Method
   const restaurante  = () => {
-    fetch(url + `/api/restaurants?rating=${rating}&price=${price}`)
+    fetch(url + `/api/restaurants?rating=${rating}&price_range=${price}`)
     .then(response => {
       return response.json();
     })
     .then(data => {
       console.log("DATA");
-      console.log(data[1]);
+      console.log(data);
     })
     .catch(error => console.error(error));
   }
