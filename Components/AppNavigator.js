@@ -8,6 +8,7 @@ import Banner from "./banner";
 import Products from "./Products";
 import History from "./orders-history";
 import Home from "./Home";
+import Account from "./Account";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -16,8 +17,10 @@ const AppNavigator = () => {
 
   // Attributes
   // chnage to false
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  // const [isClient, setIsClient] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+
+
+  // const [isCourier, setIsCourier] = useState(false);
 
 
   const AuthStack = () => (
@@ -50,10 +53,25 @@ const AppNavigator = () => {
     </Stack.Navigator>
   );
 
+  // const CourierStack = () => (
+  //   <Stack.Navigator
+  //     headerMode="screen"
+  //     screenOptions={{
+  //       headerShown: false,
+  //     }}
+  //     initialRouteName="Authentification"
+  //   >
+  //     <Stack.Screen name="Authentification">
+  //       {(props) => <Auth {...props} setIsAuthenticated={setIsAuthenticated} />}
+  //     </Stack.Screen>
+  //   </Stack.Navigator>
+  // );
+
   const TabNavigation = () => (
     <Tab.Navigator initialRouteName="Restaurants">
       <Tab.Screen name="Restaurants" component={MainStack} />
       <Tab.Screen name="Order History" component={History} />
+      <Tab.Screen name="Account" component={Account} />
     </Tab.Navigator>
   );
 
