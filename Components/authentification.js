@@ -2,10 +2,9 @@ import React, { useState, Component } from "react";
 import { View, Text, StyleSheet, TextInput, Image, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
+const urlNgrok = "https://ed11-98-143-255-3.ngrok.io";
 
-const urlNgrok = "https://515d-2607-fea8-fec0-85a9-5019-83f4-35e6-706f.ngrok.io"
-
-const Auth = ({ setIsAuthenticated }) => {
+const Auth = ({ setIsAuthenticated, setIsClient }) => {
   // Attributes
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,28 +23,42 @@ const Auth = ({ setIsAuthenticated }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setIsAuthenticated(true);
-        navigation.navigate("Restaurants");
+        // console.log("DATA");
+        // console.log(data);
+        isUser = data.user_id;
+        isCustomer = data.customer_id;
+        isCourrier = data.courier_id;
+
+        // Determine where to send the user
+        if (isCustomer && !isUser && !isCourrier) {
+          navigation.navigate("Restaurants");
+        } else if (isCourrier && !isCustomer && isUser) {
+          // navigation.navigate("Courrier");
+        } else if (isCustomer && isCourrier && !isUser) {
+          navigation.navigate("Home");
+        }
       })
       .catch((error) => {
         console.error(error);
       });
   };
 
-
-  
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Image source={require('../assets/Images/AppLogoV2.png')} style={styles.logo} resizeMode="contain" />
+        <Image
+          source={require("../assets/Images/AppLogoV2.png")}
+          style={styles.logo}
+          resizeMode="contain"
+        />
         <Text style={styles.title}>Welcome Back</Text>
         <Text style={styles.subtitle}>Login to begin</Text>
         <Text style={styles.label}>Email</Text>
         <TextInput
           style={styles.input}
           placeholder=""
-          value="erica.ger@gmail.com"
+          value="pauletta.watsica@bednar-leannon.io"
           // value={email}
           // onChangeText={(text) => setEmail(text)}
           required={true}
@@ -106,7 +119,7 @@ const styles = StyleSheet.create({
     height: 200,
     marginTop: 30,
     marginBottom: 20,
-  }
+  },
 });
 
 export default Auth;

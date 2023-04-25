@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Button, FlatList, StyleSheet } from "react-native";
+import { View, Text, Button, FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import { useNavigation } from "@react-navigation/native";
+import Products from "./Products";
 
-const url = "https://515d-2607-fea8-fec0-85a9-5019-83f4-35e6-706f.ngrok.io";
+const url = "https://ed11-98-143-255-3.ngrok.io";
 
 const Restaurants = () => {
   const [rating, setRating] = useState(0);
   const [price, setPrice] = useState(0);
   const [restaurants, setRestaurants] = useState([]);
+  const navigation = useNavigation();
+  // const restaurant_id = 2
 
   const fetchRestaurants = () => {
     fetch(`${url}/api/restaurants?rating=${rating}&price_range=${price}`)
@@ -19,15 +23,23 @@ const Restaurants = () => {
       .catch((error) => console.error(error));
   };
 
+
   useEffect(() => {
     fetchRestaurants();
   }, [rating, price]);
 
+  const handleRestaurantPress = (restaurantId, name, price_range, rating) => {
+    navigation.navigate('Products', { restaurantId, name, price_range, rating });
+  }
+
+
   const renderItem = ({ item }) => (
-    <View style={styles.restaurant}>
-      <Text style={styles.title}>{item.name}</Text>
-      <Text>{`Rating: ${item.rating}, Price Range: ${item.price_range}`}</Text>
-    </View>
+    <TouchableOpacity onPress={() => handleRestaurantPress(item.id, item.name, item.price_range, item.rating )}>
+      <View style={styles.restaurant}>
+        <Text style={styles.title}>{item.name}</Text>
+        <Text>{`Rating: ${item.rating}, Price Range: ${item.price_range}`}</Text>
+      </View>
+    </TouchableOpacity>
   );
 
   return (
@@ -55,11 +67,11 @@ const Restaurants = () => {
             onValueChange={(itemValue) => setRating(itemValue)}
           >
             <Picker.Item label="--Select--" value="" />
-            <Picker.Item label="1" value="1" />
-            <Picker.Item label="2" value="2" />
-            <Picker.Item label="3" value="3" />
-            <Picker.Item label="4" value="4" />
-            <Picker.Item label="5" value="5" />
+            <Picker.Item label="⭐️" value="1" />
+            <Picker.Item label="⭐️⭐️" value="2" />
+            <Picker.Item label="⭐️⭐️⭐️" value="3" />
+            <Picker.Item label="⭐️⭐️⭐️⭐️" value="4" />
+            <Picker.Item label="⭐️⭐️⭐️⭐️⭐️" value="5" />
           </Picker>
           <Picker
             selectedValue={price}
@@ -67,9 +79,9 @@ const Restaurants = () => {
             onValueChange={(itemValue) => setPrice(itemValue)}
           >
             <Picker.Item label="--Select--" value="" />
-            <Picker.Item label="1" value="1" />
-            <Picker.Item label="2" value="2" />
-            <Picker.Item label="3" value="3" />
+            <Picker.Item label="﹩" value="1" />
+            <Picker.Item label="﹩﹩" value="2" />
+            <Picker.Item label="﹩﹩﹩" value="3" />
           </Picker>
         </View>
       </View>
