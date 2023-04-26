@@ -11,7 +11,7 @@ import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "@react-navigation/native";
 import { Modal } from "react-native";
 
-const url = "https://ed11-98-143-255-3.ngrok.io";
+const url = "https://bdd9-2607-fea8-fec0-85a9-c0fc-89d6-eb11-77d2.ngrok.io";
 
 const Products = (props) => {
   // Attributes
@@ -117,15 +117,20 @@ const Products = (props) => {
           <TouchableOpacity style={styles.button}>
             <Button title="CREATE ORDER" onPress={handleCreateOrder} />
           </TouchableOpacity>
-          <Modal
-            visible={modalVisible}
-            onRequestClose={() => setModalVisible(false)}
-          >
-            <Text>Hello!</Text>
-          </Modal>
         </View>
 
         <Button title="Fetch products test" onPress={fetchProducts} />
+
+        <Modal
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <View style={styles.modal}>
+            <View style={styles.modalContent}>
+              <Text>Hello!</Text>
+            </View>
+          </View>
+        </Modal>
 
         <View style={{ flex: 1, padding: 10 }}>
           <FlatList
@@ -168,6 +173,17 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingBottom: 50,
+  },
+  modal: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 10,
   },
 });
 

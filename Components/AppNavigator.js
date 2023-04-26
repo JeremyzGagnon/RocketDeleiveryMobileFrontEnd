@@ -14,13 +14,10 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
-
   // Attributes
-  // chnage to false
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
-
-
+  const [isAuthenticated, setIsAuthenticated] = useState(true);// chnage this to false
   // const [isCourier, setIsCourier] = useState(false);
+  
 
 
   const AuthStack = () => (
@@ -53,19 +50,18 @@ const AppNavigator = () => {
     </Stack.Navigator>
   );
 
-  // const CourierStack = () => (
-  //   <Stack.Navigator
-  //     headerMode="screen"
-  //     screenOptions={{
-  //       headerShown: false,
-  //     }}
-  //     initialRouteName="Authentification"
-  //   >
-  //     <Stack.Screen name="Authentification">
-  //       {(props) => <Auth {...props} setIsAuthenticated={setIsAuthenticated} />}
-  //     </Stack.Screen>
-  //   </Stack.Navigator>
-  // );
+  const CourierStack = () => (
+    <Stack.Navigator
+      headerMode="screen"
+      screenOptions={{
+        headerShown: false,
+      }}
+      initialRouteName="Authentification"
+    >
+      {/* <Stack.Screen name="Deliveries" component={Deliveries} /> */}
+      <Stack.Screen name="Account" component={Account} />={" "}
+    </Stack.Navigator>
+  );
 
   const TabNavigation = () => (
     <Tab.Navigator initialRouteName="Restaurants">

@@ -2,7 +2,8 @@ import React, { useState, Component } from "react";
 import { View, Text, StyleSheet, TextInput, Image, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-const urlNgrok = "https://ed11-98-143-255-3.ngrok.io";
+const urlNgrok =
+  "https://bdd9-2607-fea8-fec0-85a9-c0fc-89d6-eb11-77d2.ngrok.io";
 
 const Auth = ({ setIsAuthenticated, setIsClient }) => {
   // Attributes
@@ -23,19 +24,42 @@ const Auth = ({ setIsAuthenticated, setIsClient }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setIsAuthenticated(true);
-        // console.log("DATA");
-        // console.log(data);
-        isUser = data.user_id;
-        isCustomer = data.customer_id;
-        isCourrier = data.courier_id;
 
+          // setIsAuthenticated(true);
+          // navigation.navigate("Restaurants");
+
+        console.log("DATA");
+        console.log(data);
+        isUser = data.user_id;
+        console.log("isUser");
+        console.log(isUser == true);
+        isCustomer = data.customer_id;
+
+        console.log("isCustomer");
+        console.log(isCustomer == true);
+
+        isCourrier = data.courier_id;
+        console.log("isCourrier");
+        console.log(isCourrier == true);
+        console.log(isCourrier && isCustomer && isUser)
+        isUser = true;
+        isCustomer = false
+        isCourrier = false;
         // Determine where to send the user
         if (isCustomer && !isUser && !isCourrier) {
+          console.log("isCustomer && !isUser && !isCourrier");
+          setIsAuthenticated(true);
+
           navigation.navigate("Restaurants");
         } else if (isCourrier && !isCustomer && isUser) {
+          console.log("isCourrier && !isCustomer && isUser");
+          setIsAuthenticated(true);
+
           // navigation.navigate("Courrier");
         } else if (isCustomer && isCourrier && !isUser) {
+          console.log("isCustomer && isCourrier && !isUser");
+          setIsAuthenticated(true);
+
           navigation.navigate("Home");
         }
       })
@@ -58,9 +82,9 @@ const Auth = ({ setIsAuthenticated, setIsClient }) => {
         <TextInput
           style={styles.input}
           placeholder=""
-          value="pauletta.watsica@bednar-leannon.io"
-          // value={email}
-          // onChangeText={(text) => setEmail(text)}
+          // value="pauletta.watsica@bednar-leannon.io"
+          value={email}
+          onChangeText={(text) => setEmail(text)}
           required={true}
         />
         <Text style={styles.label}>Password</Text>
@@ -68,9 +92,9 @@ const Auth = ({ setIsAuthenticated, setIsClient }) => {
           style={styles.input}
           placeholder=""
           secureTextEntry={true}
-          value="password"
-          // value={password}
-          // onChangeText={(text) => setPassword(text)}
+          // value="password"
+          value={password}
+          onChangeText={(text) => setPassword(text)}
           required={true}
         />
         <Button title="Log in" onPress={handleLogin} />

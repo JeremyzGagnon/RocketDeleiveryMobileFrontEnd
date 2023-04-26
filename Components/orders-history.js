@@ -10,14 +10,13 @@ import {
 import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "@react-navigation/native";
 
-const url = "https://ed11-98-143-255-3.ngrok.io";
+const url = "https://bdd9-2607-fea8-fec0-85a9-c0fc-89d6-eb11-77d2.ngrok.io";
 
 const History = () => {
   // Attributes
   const type = "customer";
   const id = 10;
   const [history, setHistory] = useState([]);
-
 
   // Methods
   const fetchHistory = () => {
@@ -39,73 +38,62 @@ const History = () => {
     fetchHistory();
   }, []);
 
-  const renderItem = ({ item }) => (
-    
-    <View style={styles.product}>
-      <Text style={styles.name}>{item.id}</Text>
-      <Text style={styles.name}>{item.order_status_id}</Text>
-    </View>
-  );
-
-
-
-  return (
-    <View>
-        <Text
-          style={{
-            fontSize: 18,
-            fontWeight: "bold",
-            textAlign: "left",
-            marginLeft: 20,
-            marginBottom: 10,
-          }}
-        >
-          MY ORDERS
-        </Text>
-        <Button title="Fetch history" onPress={() => fetchHistory()} />
-        <FlatList
-            data={history}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id.toString()}
-            contentContainerStyle={styles.list}
-          />
-
-
-    </View>
-  );
+  const renderItem = ({ item, index }) => {
+    if (index === 0) { // add header row
+      return (
+        <View style={styles.headerRow}>
+          <Text style={[styles.headerCell, { flex: 1 }]}>Order</Text>
+          <Text style={[styles.headerCell, { flex: 2 }]}>Status</Text>
+          
+        </View>
+      );
+    } else { // add data rows
+      return (
+        <View style={styles.dataRow}>
+          <Text style={[styles.dataCell, { flex: 1 }]}>{item.id}</Text>
+          <Text style={[styles.dataCell, { flex: 2 }]}>{item.order_status_id}</Text>
+        </View>
+      );
+    }
+  };
   
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>MY ORDERS</Text>
+        <Button title="Fetch history" onPress={() => fetchHistory()} />
+      </View>
+      <FlatList
+        data={history}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id.toString()}
+        contentContainerStyle={styles.list}
+      />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-  product: {
-    padding: 10,
-    margin: 10,
-    backgroundColor: "#fff",
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: "#ddd",
+  headerRow: {
+    flexDirection: 'row',
+    backgroundColor: '#f2f2f2',
+    paddingVertical: 10,
+    paddingHorizontal: 5,
   },
-  name: {
+  headerCell: {
+    fontWeight: 'bold',
     fontSize: 16,
-    fontWeight: "bold",
-    marginBottom: 5,
+    textAlign: 'center',
   },
-  price: {
-    fontSize: 14,
-    marginBottom: 5,
+  dataRow: {
+    flexDirection: 'row',
+    paddingVertical: 10,
+    paddingHorizontal: 5,
   },
-  count: {
+  dataCell: {
     fontSize: 16,
-    marginHorizontal: 10,
-  },
-  description: {
-    fontSize: 14,
-    marginTop: 10,
-  },
-  list: {
-    paddingBottom: 50,
+    textAlign: 'center',
   },
 });
-
 
 export default History;

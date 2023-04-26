@@ -14,9 +14,34 @@ import { useNavigation } from "@react-navigation/native";
 const Account = () => {
   // Attributes
   const [text, setText] = useState("");
+  
+  //   variable pour changer le text dependament de qui est sur l'application
+  const [userType, setUserType] = useState("");
   // Methods
+
   const handleInputChange = (text) => {
     setText(text);
+  };
+
+  const handleLogin = () => {
+    fetch(urlNgrok + "/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setIsAuthenticated(true);
+        navigation.navigate("Restaurants");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -60,6 +85,7 @@ const Account = () => {
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>UPDATE ACCOUNT</Text>
         </TouchableOpacity>
+        <Button title="Test update account" onPress={() => fetchHistory()} />
       </View>
     </View>
   );

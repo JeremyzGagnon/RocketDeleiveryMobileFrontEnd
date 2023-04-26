@@ -4,7 +4,7 @@ import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "@react-navigation/native";
 import Products from "./Products";
 
-const url = "https://ed11-98-143-255-3.ngrok.io";
+const url = "https://bdd9-2607-fea8-fec0-85a9-c0fc-89d6-eb11-77d2.ngrok.io";
 
 const Restaurants = () => {
   const [rating, setRating] = useState(0);
