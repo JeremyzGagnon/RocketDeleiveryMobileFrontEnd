@@ -3,13 +3,14 @@ import { View, Text, StyleSheet, TextInput, Image, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 const urlNgrok =
-  "https://bdd9-2607-fea8-fec0-85a9-c0fc-89d6-eb11-77d2.ngrok.io";
+  "https://4389-2607-fea8-fec0-85a9-7042-1700-ec4a-3f84.ngrok.io";
 
-const Auth = ({ setIsAuthenticated, setIsClient }) => {
+const Auth = ({ setIsAuthenticated, setIsClient, setIsCourier }) => {
   // Attributes
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
+
   // Methods
   const handleLogin = () => {
     fetch(urlNgrok + "/api/login", {
@@ -24,43 +25,41 @@ const Auth = ({ setIsAuthenticated, setIsClient }) => {
     })
       .then((response) => response.json())
       .then((data) => {
+        // setIsAuthenticated(true);
+        // navigation.navigate("Restaurants");
 
-          // setIsAuthenticated(true);
-          // navigation.navigate("Restaurants");
+        // console.log("DATA");
+        // console.log(data);
+        // const isCustomer = !isNaN(data.customer_id);
 
-        console.log("DATA");
-        console.log(data);
-        isUser = data.user_id;
-        console.log("isUser");
-        console.log(isUser == true);
-        isCustomer = data.customer_id;
+        // console.log("isCustomer");
+        // console.log("Value: " + isCustomer)
+        // console.log(isCustomer == true);
 
-        console.log("isCustomer");
-        console.log(isCustomer == true);
+        // const isCourrier = !isNaN(data.courier_id);
+        // console.log("isCourrier");
+        // console.log("Value: " + isCourrier)
+        // console.log(isCourrier == true);
+        // console.log(isCourrier && isCustomer && isUser)
 
-        isCourrier = data.courier_id;
-        console.log("isCourrier");
-        console.log(isCourrier == true);
-        console.log(isCourrier && isCustomer && isUser)
-        isUser = true;
-        isCustomer = false
-        isCourrier = false;
+        const isUser = true;
+        const isCustomer = false;
+        const isCourrier = false;
+
         // Determine where to send the user
-        if (isCustomer && !isUser && !isCourrier) {
-          console.log("isCustomer && !isUser && !isCourrier");
+        if (isCustomer && !isCourrier) {
           setIsAuthenticated(true);
-
+          setIsClient(true);
           navigation.navigate("Restaurants");
-        } else if (isCourrier && !isCustomer && isUser) {
-          console.log("isCourrier && !isCustomer && isUser");
+        } else if (isCourrier && !isCustomer) {
           setIsAuthenticated(true);
-
           // navigation.navigate("Courrier");
-        } else if (isCustomer && isCourrier && !isUser) {
-          console.log("isCustomer && isCourrier && !isUser");
+        } else if (isCustomer && isCourrier) {
+          setIsClient(true);
+          setIsCourier(true);
           setIsAuthenticated(true);
 
-          navigation.navigate("Home");
+          navigation.navigate("Home"); //page de selection
         }
       })
       .catch((error) => {

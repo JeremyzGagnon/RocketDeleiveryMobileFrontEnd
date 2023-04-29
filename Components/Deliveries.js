@@ -18,3 +18,5 @@ const Deliveries = () => {
         <Text>Hello</Text>
     );
 }
+
+export default Deliveries;
