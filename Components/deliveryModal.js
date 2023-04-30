@@ -10,19 +10,14 @@ import {
 import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-// import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import Modal from "react-native-modal";
 
-const url = "https://d76d-2607-fea8-fec0-85a9-b987-7b27-9f6c-b57e.ngrok.io";
+const url = "https://d61c-2605-b100-b32-4732-cd12-8d63-4957-c275.ngrok.io";
 
-const History = () => {
+const DeliveriesModal = () => {
   // Attributes
-  const type = "customer";
-  const id = 10;
+  const type = "courier";
+  const id = 8;
   const [history, setHistory] = useState([]);
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [modalData, setModalData] = useState([]);
-  // const [modalTitle, setModalTitle] =  useState('');
 
   // Methods
   const fetchHistory = () => {
@@ -40,13 +35,15 @@ const History = () => {
       .catch((error) => console.error(error));
   };
 
+  
+
   useEffect(() => {
     fetchHistory();
   }, []);
 
   const modalHistory = (item) => {
     setModalVisible(!isModalVisible);
-    setModalData(item);
+    setModalData(item)
   };
 
   const renderItem = ({ item, index }) => {
@@ -54,7 +51,8 @@ const History = () => {
       // add header row
       return (
         <View style={styles.headerRow}>
-          <Text style={[styles.headerCell, { flex: 1 }]}>ORDER</Text>
+          <Text style={[styles.headerCell, { flex: 1 }]}>ORDER ID</Text>
+          <Text style={[styles.headerCell, { flex: 2 }]}>ADDRESS</Text>
           <Text style={[styles.headerCell, { flex: 2 }]}>STATUS</Text>
           <Text style={[styles.headerCell, { flex: 2 }]}>VIEW</Text>
         </View>
@@ -64,10 +62,11 @@ const History = () => {
       return (
         <View style={styles.dataRow}>
           <Text style={[styles.dataCell, { flex: 1 }]}>
-            {item.restaurant_name}
+            {item.order_id}
           </Text>
+          <Text style={[styles.dataCell, { flex: 2 }]}>{item.restaurant_address}</Text>
           <Text style={[styles.dataCell, { flex: 2 }]}>{item.status}</Text>
-          <Button title="View ORDER" onPress={() => modalHistory(item)} />
+          <Button title="View ORDER" onPress={() => modalHistory(history)} />
         </View>
       );
     }
@@ -76,32 +75,9 @@ const History = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>MY ORDERS</Text>
+        <Text style={styles.headerText}>MY DELIVERIES</Text>
         <Button title="Fetch history" onPress={() => fetchHistory()} />
       </View>
-      {/* MODAL */}
-      <View style={{ flex: 1 }}>
-        <Modal isVisible={isModalVisible}>
-          <View style={{ flex: 1 }}>
-            <Text>{modalData.restaurant_name}</Text>
-            <Text>Order Summary</Text>
-            {modalData.product_orders?.map((product) => (
-              <Text key={product.product_id}>
-                {product.product_name} ({product.quantity}): {product.unit_cost}
-              </Text>
-            ))}
-
-            <Button title="Hide modal" onPress={modalHistory} />
-          </View>
-        </Modal>
-      </View>
-
-      <FlatList
-        data={history}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.order_id.toString()}
-        contentContainerStyle={styles.list}
-      />
     </View>
   );
 };
@@ -131,4 +107,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default History;
+export default DeliveriesModal;

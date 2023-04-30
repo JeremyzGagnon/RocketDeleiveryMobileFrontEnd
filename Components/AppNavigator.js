@@ -11,6 +11,8 @@ import Home from "./Home";
 import Account from "./Account";
 import Deliveries from "./Deliveries";
 
+import DeliveriesModal from "./deliveryModal"; //delete
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -49,10 +51,13 @@ const AppNavigator = () => {
       }}
       // initialRouteName="Restaurants"
     >
+      <Stack.Screen name="History" component={History} />
+
+      <Stack.Screen name="Deliveries" component={Deliveries} />
+      <Stack.Screen name="DeliveriesModal" component={DeliveriesModal} />
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Restaurants" component={Restaurant} />
       <Stack.Screen name="Products" component={Products} />
-      <Stack.Screen name="History" component={History} />
     </Stack.Navigator>
   );
 
@@ -71,7 +76,7 @@ const AppNavigator = () => {
   );
 
   const TabNavigation = () => (
-    <Tab.Navigator initialRouteName="Restaurants">
+    <Tab.Navigator >
       <Tab.Screen name="Restaurants" component={ClientStack} />
       <Tab.Screen name="Order History" component={History} />
       <Tab.Screen name="Account" component={Account} />
@@ -82,10 +87,11 @@ const AppNavigator = () => {
     // Return the appropriate stack when logged in or not with the banner
     <NavigationContainer>
       {isAuthenticated && <Banner setIsAuthenticated={setIsAuthenticated} />}
-      {/* {isAuthenticated ? <ClientStack /> : <AuthStack />} */}
-      {isAuthenticated ? <TabNavigation /> : <AuthStack />}
+      {isAuthenticated ? <ClientStack /> : <AuthStack />}
+      {/* {isAuthenticated ? <TabNavigation /> : <AuthStack />} */}
       {/* {isAuthenticated && <Tabulation />} */}
     </NavigationContainer>
+    
   );
 };
 
